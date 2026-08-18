@@ -1,0 +1,28 @@
+{
+  "name": "js-utility-library",
+  "version": "1.0.0",
+  "description": "A reusable JavaScript utility package with helper functions for arrays, strings, dates, and numbers.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./array": "./src/array.js",
+    "./string": "./src/string.js",
+    "./date": "./src/date.js",
+    "./number": "./src/number.js"
+  },
+  "scripts": {
+    "demo": "node examples/demo.js",
+    "test": "node test/utils.test.js"
+  },
+  "keywords": [
+    "utility",
+    "helpers",
+    "array",
+    "string",
+    "date",
+    "number",
+    "currency"
+  ],
+  "license": "MIT"
+}

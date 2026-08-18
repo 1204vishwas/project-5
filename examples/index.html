@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Utility Library — Console Demo</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      max-width: 820px; margin: 2rem auto; padding: 0 1rem; line-height: 1.55;
+    }
+    h1 { margin-bottom: 0.25rem; }
+    p.lead { color: #666; margin-top: 0; }
+    #output {
+      background: #1e1e1e; color: #d4d4d4; padding: 1rem 1.25rem;
+      border-radius: 8px; font-family: Consolas, Menlo, monospace;
+      font-size: 13px; white-space: pre; overflow-x: auto; min-height: 120px;
+    }
+    .group { color: #4fc1ff; font-weight: bold; }
+    .label { color: #9cdcfe; }
+    .value { color: #ce9178; }
+    kbd {
+      background: #eee; border: 1px solid #ccc; border-radius: 4px;
+      padding: 1px 5px; font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Utility Functions Library</h1>
+  <p class="lead">
+    Results below are computed live in your browser. Open DevTools
+    (<kbd>F12</kbd>) and use the global <code>utils</code> object to
+    experiment in the console — e.g. <code>utils.number.formatCurrency(9.99)</code>.
+  </p>
+
+  <div id="output">Running demonstrations…</div>
+
+  <script type="module">
+    import utils from '../src/index.js';
+
+    // Expose the whole library on the console for interactive testing.
+    window.utils = utils;
+
+    const { array, string, date, number } = utils;
+    const lines = [];
+
+    const group = (title) => lines.push(`\n<span class="group">== ${title} ==</span>`);
+    const show = (label, value) =>
+      lines.push(
+        `  <span class="label">${label.padEnd(36)}</span>` +
+        `<span class="value">${JSON.stringify(value)}</span>`
+      );
+
+    group('ARRAY');
+    show('unique([1,2,2,3,3])', array.unique([1, 2, 2, 3, 3]));
+    show('chunk([1,2,3,4,5], 2)', array.chunk([1, 2, 3, 4, 5], 2));
+    show('flatten([1,[2,[3,[4]]]])', array.flatten([1, [2, [3, [4]]]]));
+    show('difference([1,2,3,4],[2,4])', array.difference([1, 2, 3, 4], [2, 4]));
+
+    group('STRING');
+    show("titleCase('the quick fox')", string.titleCase('the quick fox'));
+    show("kebabCase('camelCaseText')", string.kebabCase('camelCaseText'));
+    show("slugify('Héllo, World!')", string.slugify('Héllo, World!'));
+    show("truncate('The quick brown', 9)", string.truncate('The quick brown', 9));
+
+    group('DATE');
+    show("formatDate(now,'DD/MM/YYYY')", date.formatDate(new Date(), 'DD/MM/YYYY'));
+    show('daysBetween(08-18, 08-23)', date.daysBetween('2026-08-18', '2026-08-23'));
+    show('isLeapYear(2024)', date.isLeapYear(2024));
+
+    group('NUMBER');
+    show('formatCurrency(1234.5)', number.formatCurrency(1234.5));
+    show("formatCurrency(9999,'INR','en-IN')", number.formatCurrency(9999, 'INR', 'en-IN'));
+    show('formatPercent(0.4567, 1)', number.formatPercent(0.4567, 1));
+    show('formatBytes(1536)', number.formatBytes(1536));
+
+    document.getElementById('output').innerHTML = lines.join('\n');
+    console.log('%cUtility library loaded — try `utils` in the console!', 'color:#4fc1ff');
+  </script>
+</body>
+</html>
